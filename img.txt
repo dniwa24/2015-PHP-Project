@@ -1,0 +1,3 @@
+<form action="testimage1.php" method="post" enctype="multipart/form-data"> 
+<input name="uploadimage" type="file" /> </form>
+ <?php $filename = $_FILES['uploadimage']['tmp_name']; ?>

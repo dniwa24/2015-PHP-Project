@@ -1,0 +1,53 @@
+<?php
+session_start();
+require_once("include/connect.php");
+
+if (isset($_POST['login'])) {
+	$username = $_POST['username'];
+	$password = md5($_POST['password']);
+
+	$query = mysql_query("SELECT * FROM user WHERE username='$username' AND password='$password' ");
+	$row = mysql_fetch_array($query);
+	if(mysql_num_rows($query)==1) {
+		if ($row['levelid']==1) {
+			header("location:admin/main.php");
+		}
+		else{
+			$rows=mysql_fetch_array($query);
+			$_SESSION['id']=$row["userid"];
+			mysql_close($con);
+			header("location:order.php");
+		}
+	}	
+	else
+		echo "Invalid account";
+}
+?>
+
+<html>
+<body>
+<form action="" method="post">
+<table align="center" border="1">
+<tr>
+<td> Username: </td>
+<td> <input type="text" name="username" /> </td>
+</tr>
+
+<tr>
+<td> Password: </td>
+<td> <input type="password" name="password" /> </td>
+</tr>
+
+<tr>
+<td colspan="2" align="center"> <input type="submit" name="login" value="Login"/> </td>
+</tr>
+
+<tr>
+<td colspan="2" align="center"> <a href="register.php"> Don't have an account? Register here! </a> </td>
+</tr>
+
+
+</table>
+</form>
+</body>
+</html>
